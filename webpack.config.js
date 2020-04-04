@@ -26,7 +26,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      'themes': resolveAppPath('themes/default')    
+      'react': path.resolve('node_modules/react')
     }
   },
   module: {
