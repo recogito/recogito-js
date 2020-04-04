@@ -196,8 +196,11 @@ export default class App extends Component {
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}
-            onCancel={this.onCancelAnnotation} 
-          />
+            onCancel={this.onCancelAnnotation}>
+
+            {this.props.children}
+
+          </Editor>
         }
 
         { this.state.showRelationEditor && 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { WebAnnotation, deflateHTML } from 'recogito-client-core';
+import { Editor, WebAnnotation, deflateHTML } from 'recogito-client-core';
 import App from './App';
 
 /**
@@ -40,7 +40,6 @@ class Recogito {
     wrapper.appendChild(container);
 
     ReactDOM.render(
-
       <App 
         ref={this._app}
         contentEl={content}
@@ -49,7 +48,13 @@ class Recogito {
         formatter={config.formatter}
         onAnnotationCreated={this.handleAnnotationCreated} 
         onAnnotationUpdated={this.handleAnnotationUpdated} 
-        onAnnotationDeleted={this.handleAnnotationDeleted} />,
+        onAnnotationDeleted={this.handleAnnotationDeleted}>
+
+        {/* A basic editor with just a comment & tagwidget */}
+        <Editor.CommentWidget />
+        <Editor.TagWidget />
+
+      </App>,
     
     container);
   }
