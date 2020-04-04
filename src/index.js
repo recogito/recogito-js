@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { Editor, WebAnnotation, deflateHTML } from 'recogito-client-core';
-import App from './App';
+import { TextAnnotator, Editor, WebAnnotation, deflateHTML } from 'recogito-client-core';
+
+import 'recogito-client-core/themes/default';
 
 /**
  * The entrypoint into the application. Provides the 
@@ -27,9 +28,8 @@ class Recogito {
 
     // Unless this is preformatted text, remove multi spaces and 
     // empty text node, so that HTML char offsets == browser offsets.
-    if (config.mode !== 'pre') {
+    if (config.mode !== 'pre')
       content = deflateHTML(content);
-    }
 
     const wrapper = document.createElement('DIV');
     wrapper.style.position = 'relative';
@@ -39,8 +39,11 @@ class Recogito {
     const container = document.createElement('DIV');
     wrapper.appendChild(container);
 
+    const { CommentWidget, TagWidget } = Editor;
+
+    // A basic TextAnnotator with just a comment and a tag widget
     ReactDOM.render(
-      <App 
+      <TextAnnotator 
         ref={this._app}
         contentEl={content}
         containerEl={wrapper} 
@@ -50,26 +53,22 @@ class Recogito {
         onAnnotationUpdated={this.handleAnnotationUpdated} 
         onAnnotationDeleted={this.handleAnnotationDeleted}>
 
-        {/* A basic editor with just a comment & tagwidget */}
-        <Editor.CommentWidget />
-        <Editor.TagWidget />
+        <CommentWidget />
+        <TagWidget />
 
-      </App>,
+      </TextAnnotator>,
     
     container);
   }
 
-  handleAnnotationCreated = annotation => {
+  handleAnnotationCreated = annotation =>
     this._emitter.emit('createAnnotation', annotation);
-  }
 
-  handleAnnotationUpdated = (annotation, previous) => {
+  handleAnnotationUpdated = (annotation, previous) =>
     this._emitter.emit('updateAnnotation', annotation, previous);
-  }
 
-  handleAnnotationDeleted = annotation => {
+  handleAnnotationDeleted = annotation =>
     this._emitter.emit('deleteAnnotation', annotation);
-  }
   
   /******************/               
   /*  External API  */
@@ -78,16 +77,14 @@ class Recogito {
   /**
    * Adds a JSON-LD WebAnnotation to the annotation layer.
    */
-  addAnnotation = annotation => {
+  addAnnotation = annotation =>
     this._app.current.addAnnotation(new WebAnnotation(annotation));
-  }
 
   /**
    * Removes the given JSON-LD WebAnnotation from the annotation layer.
    */
-  removeAnnotation = annotation => {
+  removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
-  }
 
   /** 
    * Loads JSON-LD WebAnnotations from the given URL.
@@ -108,16 +105,14 @@ class Recogito {
    * Activates annotation or relationship drawing mode. 
    * @param mode a string, either ANNOTATION (default) or RELATIONS
    */
-  setMode = mode => {
+  setMode = mode =>
     this._app.current.setMode(mode);
-  }
 
   /** 
    * Adds an event handler.
    */
-  on = (event, handler) => {
+  on = (event, handler) =>
     this._emitter.on(event, handler);
-  }
 
   /** 
    * Removes an event handler.
@@ -125,13 +120,10 @@ class Recogito {
    * If no callback, removes all handlers for 
    * the given event.
    */
-  off = (event, callback) => {
+  off = (event, callback) =>
     this._emitter.off(event, callback);
-  }
 
 }
 
-export const init = config => {
-  return new Recogito(config);
-}
+export const init = config => new Recogito(config);
 
