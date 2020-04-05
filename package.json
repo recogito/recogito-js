@@ -1,5 +1,5 @@
 {
-  "name": "recogito-js",
+  "name": "@recogito/recogito-js",
   "version": "0.1.0",
   "description": "A JavaScript library for semantic text annotation",
   "main": "src/index.js",
@@ -49,6 +49,7 @@
     "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
+    "@recogito/recogito-client-core": "^0.1.0",
     "axios": "^0.19.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

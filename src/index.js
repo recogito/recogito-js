@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { TextAnnotator, Editor, WebAnnotation, deflateHTML } from 'recogito-client-core';
+import { TextAnnotator, Editor, WebAnnotation, deflateHTML } from '@recogito/recogito-client-core';
 
-import 'recogito-client-core/themes/default';
+import '@recogito/recogito-client-core/themes/default';
 
 /**
  * The entrypoint into the application. Provides the 
