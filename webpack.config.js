@@ -10,15 +10,10 @@ const resolveAppPath = relativePath => path.resolve(APP_DIR, relativePath);
 module.exports = {
   entry: resolveAppPath('src'),
   output: {
-    filename: 'recogito-js.min.js',
+    filename: 'recogito-0.1.1.min.js',
     library: 'Recogito',
     libraryTarget: 'umd',
     umdNamedDefine: true
-  },
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
   },
   performance: {
     hints: false
