@@ -1,8 +1,9 @@
 # RecogitoJS
 
-A JavaScript library for adding text annotation functionality to any web page, as well as a 
-toolbox for building your own customized annotation apps. RecogitoJS supports the
-[W3C Web Annotation](https://www.w3.org/TR/annotation-model/) standard for web annotation.
+A JavaScript library for text annotation. Add annotation functionality to any web page 
+easily, or use it as a toolbox for building your own, completely custom annotation apps. 
+RecogitoJS supports the [W3C Web Annotation](https://www.w3.org/TR/annotation-model/) 
+standard.
 
 ![Screenshot](screenshot.png)
 
