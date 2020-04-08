@@ -20,33 +20,41 @@ class Recogito {
     // Event handling via tiny-emitter
     this._emitter = new Emitter();
 
-    // Content is wrapped in a container DIV, and the application 
-    // DIV (which contains the editor popup) is attached as a sibling. This 
-    // way the content and editor share the same CSS position reference frame.
-    let content = (config.content.nodeType) ? 
+    // The content element (which contains the text we want to annotate) 
+    // is wrapped in a DIV ('wrapperEl'). The application container DIV, 
+    // which holds the editor popup, will be attached as a child to the 
+    // wrapper element (=a sibling to the content element). This way, 
+    // content and editor share the same CSS position reference frame.
+    //
+    // <wrapperEl>
+    //   <contentEl />
+    //   <appContainerEl />
+    // </wrapperEl>
+    // 
+    let contentEl = (config.content.nodeType) ? 
       config.content : document.getElementById(config.content);
 
     // Unless this is preformatted text, remove multi spaces and 
-    // empty text node, so that HTML char offsets == browser offsets.
+    // empty text nodes, so that HTML char offsets == browser offsets.
     if (config.mode !== 'pre')
-      content = deflateHTML(content);
+      contentEl = deflateHTML(contentEl);
 
-    const wrapper = document.createElement('DIV');
-    wrapper.style.position = 'relative';
-    content.parentNode.insertBefore(wrapper, content);
-    wrapper.appendChild(content);
+    const wrapperEl = document.createElement('DIV');
+    wrapperEl.style.position = 'relative';
+    contentEl.parentNode.insertBefore(wrapperEl, contentEl);
+    wrapperEl.appendChild(contentEl);
     
-    const container = document.createElement('DIV');
-    wrapper.appendChild(container);
+    const appContainerEl = document.createElement('DIV');
+    wrapperEl.appendChild(appContainerEl);
 
     const { CommentWidget, TagWidget } = Editor;
 
-    // A basic TextAnnotator with just a comment and a tag widget
+    // A basic TextAnnotator with just a comment and a tag widget.
     ReactDOM.render(
       <TextAnnotator 
         ref={this._app}
-        contentEl={content}
-        containerEl={wrapper} 
+        contentEl={contentEl}
+        wrapperEl={wrapperEl}
         readOnly={config.readOnly}
         formatter={config.formatter}
         onAnnotationCreated={this.handleAnnotationCreated} 
@@ -58,7 +66,7 @@ class Recogito {
 
       </TextAnnotator>,
     
-    container);
+    appContainerEl);
   }
 
   handleAnnotationCreated = annotation =>
