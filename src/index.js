@@ -103,6 +103,12 @@ class Recogito {
     return annotations;
   });
 
+  /** Initializes with the list of WebAnnotations **/
+  setAnnotations = annotations => {
+    const webannotations = annotations.map(a => new WebAnnotation(a));
+    this._app.current.setAnnotations(webannotations);
+  }
+
   /**
    * Returns all annotations
    */
