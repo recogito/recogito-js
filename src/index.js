@@ -70,13 +70,13 @@ class Recogito {
   }
 
   handleAnnotationCreated = annotation =>
-    this._emitter.emit('createAnnotation', annotation);
+    this._emitter.emit('createAnnotation', annotation.underlying);
 
   handleAnnotationUpdated = (annotation, previous) =>
-    this._emitter.emit('updateAnnotation', annotation, previous);
+    this._emitter.emit('updateAnnotation', annotation.underlying, previous.underlying);
 
   handleAnnotationDeleted = annotation =>
-    this._emitter.emit('deleteAnnotation', annotation);
+    this._emitter.emit('deleteAnnotation', annotation.underlying);
   
   /******************/               
   /*  External API  */
@@ -114,7 +114,7 @@ class Recogito {
    */
   getAnnotations = () => {
     const annotations = this._app.current.getAnnotations();
-    return annotations.map(a => a._annotation);
+    return annotations.map(a => a.underlying);
   }
 
   /**
