@@ -19,7 +19,7 @@ If you use npm, `npm install @recogito/recogito-js`. Otherwise download the
 [latest release](https://github.com/recogito/recogito-js/releases/latest).
 
 ```html
-<script src="recogito-0.1.1.min.js"></script>
+<script src="recogito-0.1.2.min.js"></script>
 ```
 
 ## Using
