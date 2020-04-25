@@ -10,7 +10,7 @@ import '@recogito/recogito-client-core/themes/default';
  * The entrypoint into the application. Provides the 
  * externally visible JavaScript API.
  */
-class Recogito {
+export class Recogito {
 
   constructor(config) {   
     // Programmatic calls to this instance from outside are forwarded
@@ -140,6 +140,4 @@ class Recogito {
     this._emitter.off(event, callback);
 
 }
-
-export const init = config => new Recogito(config);
 
