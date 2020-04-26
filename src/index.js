@@ -141,3 +141,5 @@ export class Recogito {
 
 }
 
+export const init = config => new Recogito(config);
+
