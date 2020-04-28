@@ -102,8 +102,7 @@
         });
 
         document.getElementById('update-annotation').addEventListener('click', function() {
-          r.addAnnotation({
-            ...myAnnotation,
+          r.addAnnotation(Object.assign({}, myAnnotation, {
             'body': [{
               'type': 'TextualBody',
               'value': 'This annotation was added via JS, and has been updated now.'
@@ -118,7 +117,7 @@
                 'end': 61
               }]
             }
-          });
+          }));
         });
 
         document.getElementById('remove-annotation').addEventListener('click', function() {
