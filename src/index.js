@@ -69,8 +69,8 @@ export class Recogito {
     appContainerEl);
   }
 
-  handleAnnotationCreated = annotation =>
-    this._emitter.emit('createAnnotation', annotation.underlying);
+  handleAnnotationCreated = (annotation, overrideId) =>
+    this._emitter.emit('createAnnotation', annotation.underlying, overrideId);
 
   handleAnnotationUpdated = (annotation, previous) =>
     this._emitter.emit('updateAnnotation', annotation.underlying, previous.underlying);
