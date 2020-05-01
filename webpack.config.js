@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const APP_DIR = fs.realpathSync(process.cwd());
 
@@ -17,6 +18,9 @@ module.exports = {
   },
   performance: {
     hints: false
+  },
+  optimization: {
+    minimizer: [ new UglifyJsPlugin() ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
