@@ -42,3 +42,8 @@ The example below shows how to make text annotate-able with just a few lines of 
 </body>
 ```
 
+## License
+
+[BSD 3-Clause](LICENSE) (= feel free to use this code in whatever way
+you wish. But keep the attribution/license file, and if this code
+breaks something, don't complain to us :-)
