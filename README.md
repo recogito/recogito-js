@@ -1,6 +1,6 @@
 # RecogitoJS
 
-[![Join the chat at https://gitter.im/Recogito/RecogitoJS](https://badges.gitter.im/Recogito/RecogitoJS.svg)](https://gitter.im/Recogito/RecogitoJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/recogito/recogito-js](https://badges.gitter.im/recogito/recogito-js.svg)](https://gitter.im/recogito/recogito-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A JavaScript library for text annotation. Use it to add annotation functionality to a
 web page, or as a toolbox for building your own, completely custom annotation apps. 
@@ -14,6 +14,7 @@ standard.
 - [Introduction](https://github.com/recogito/recogito-js/wiki)
 - [API Reference](https://github.com/recogito/recogito-js/wiki/Developer-Documentation)
 - [Demo](https://recogito.github.io/recogito-js/)
+- []
 
 ## Installing
 
