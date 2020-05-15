@@ -1,21 +1,19 @@
 <p align="center">
+  <br/>
   <img width="345" src="https://raw.githubusercontent.com/recogito/recogito-js/master/recogitojs-logo-white-small.png" />
   <br/><br/>
 </p>
 
-[![Join the chat at https://gitter.im/recogito/recogito-js](https://badges.gitter.im/recogito/recogito-js.svg)](https://gitter.im/recogito/recogito-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-A JavaScript library for text annotation. Use it to add annotation functionality to a
-web page, or as a toolbox for building your own, completely custom annotation apps. 
-RecogitoJS supports the [W3C Web Annotation](https://www.w3.org/TR/annotation-model/) 
-standard.
+A JavaScript library for text annotation. Use it to add annotation functionality to a web page, or as a toolbox 
+for building your own, completely custom annotation apps. Try the [online demo](https://recogito.github.io/recogito-js/)
+or see the [API reference](https://github.com/recogito/recogito-js/wiki/API-Reference).
 
 ![Screenshot](screenshot.png)
 
 ## Resources
 
 - [Introduction](https://github.com/recogito/recogito-js/wiki)
-- [API Reference](https://github.com/recogito/recogito-js/wiki/Developer-Documentation)
+- [API Reference](https://github.com/recogito/recogito-js/wiki/API-Reference)
 - [Demo](https://recogito.github.io/recogito-js/)
 
 ## Installing
@@ -28,8 +26,6 @@ If you use npm, `npm install @recogito/recogito-js`. Otherwise download the
 ```
 
 ## Using
-
-The example below shows how to make text annotate-able with just a few lines of JavaScript.
 
 ```html
 <body>
@@ -46,6 +42,11 @@ The example below shows how to make text annotate-able with just a few lines of 
   </script>
 </body>
 ```
+
+Full documentation is [on the Wiki](https://github.com/recogito/recogito-js/wiki). Questions? Feedack? Feature requests? Join the 
+[RecogitoJS chat on Gitter](https://gitter.im/recogito/recogito-js).
+
+[![Join the chat at https://gitter.im/recogito/recogito-js](https://badges.gitter.im/recogito/recogito-js.svg)](https://gitter.im/recogito/recogito-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## License
 
