@@ -8,7 +8,7 @@ A JavaScript library for text annotation. Use it to add annotation functionality
 for building your own, completely custom annotation apps. Try the [online demo](https://recogito.github.io/recogito-js/)
 or see the [API reference](https://github.com/recogito/recogito-js/wiki/API-Reference).
 
-<br/><br/>
+<br/>
 
 ![Screenshot](screenshot.png)
 
