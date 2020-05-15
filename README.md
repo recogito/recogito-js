@@ -12,7 +12,7 @@ or see the [API reference](https://github.com/recogito/recogito-js/wiki/API-Refe
 
 ![Screenshot](screenshot.png)
 
-<br/><br/>
+<br/>
 
 ## Resources
 
