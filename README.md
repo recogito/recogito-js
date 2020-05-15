@@ -1,4 +1,7 @@
-# RecogitoJS
+<p align="center">
+  <img width="345" src="https://raw.githubusercontent.com/recogito/recogito-js/master/recogitojs-logo-white-small.png" />
+  <br/><br/>
+</p>
 
 [![Join the chat at https://gitter.im/recogito/recogito-js](https://badges.gitter.im/recogito/recogito-js.svg)](https://gitter.im/recogito/recogito-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -14,7 +17,6 @@ standard.
 - [Introduction](https://github.com/recogito/recogito-js/wiki)
 - [API Reference](https://github.com/recogito/recogito-js/wiki/Developer-Documentation)
 - [Demo](https://recogito.github.io/recogito-js/)
-- []
 
 ## Installing
 
