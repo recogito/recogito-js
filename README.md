@@ -14,16 +14,18 @@ or see the [API reference](https://github.com/recogito/recogito-js/wiki/API-Refe
 
 <br/>
 
-## Resources
-
-- [Introduction](https://github.com/recogito/recogito-js/wiki)
-- [API Reference](https://github.com/recogito/recogito-js/wiki/API-Reference)
-- [Demo](https://recogito.github.io/recogito-js/)
-
 ## Installing
 
-If you use npm, `npm install @recogito/recogito-js`. Otherwise download the 
-[latest release](https://github.com/recogito/recogito-js/releases/latest).
+If you use npm, `npm install @recogito/recogito-js` and 
+
+```javascript
+import { Recogito } from '@recogito/recogito-js';
+
+const r = new Recogito({ content: 'my-content' });
+```
+
+Otherwise download the [latest release](https://github.com/recogito/recogito-js/releases/latest) and
+include it in your web page.
 
 ```html
 <script src="recogito.min.js"></script>
@@ -37,7 +39,7 @@ If you use npm, `npm install @recogito/recogito-js`. Otherwise download the
   <script type="text/javascript">
     (function() {
       var r = Recogito.init({
-        content: document.getElementById('my-content')
+        content: document.getElementById('my-content') // ID or DOM element
       });
 
       // Add an event handler  
