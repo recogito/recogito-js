@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML } from '@recogito/recogito-client-core';
+import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML, setLocale } from '@recogito/recogito-client-core';
 
 import '@recogito/recogito-client-core/themes/default';
 
@@ -46,6 +46,8 @@ export class Recogito {
     
     const appContainerEl = document.createElement('DIV');
     wrapperEl.appendChild(appContainerEl);
+
+    setLocale(config.locale);
 
     const { CommentWidget, TagWidget } = Editor;
 
