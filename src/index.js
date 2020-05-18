@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { TextAnnotator, Editor, WebAnnotation, deflateHTML } from '@recogito/recogito-client-core';
+import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML } from '@recogito/recogito-client-core';
 
 import '@recogito/recogito-client-core/themes/default';
 
@@ -123,6 +123,14 @@ export class Recogito {
    */
   setMode = mode =>
     this._app.current.setMode(mode);
+
+  /** Sets user auth information **/
+  setAuthInfo = authinfo =>
+    Environment.user = authinfo;
+
+  /** Clears the user auth information **/
+  clearAuthInfo = () =>
+    Environment.user = null;
 
   /** 
    * Adds an event handler.
