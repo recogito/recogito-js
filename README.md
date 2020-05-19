@@ -1,6 +1,6 @@
 <p align="center">
   <br/>
-  <img width="270" src="https://raw.githubusercontent.com/recogito/recogito-js/master/recogitojs-logo-white-small.png" />
+  <img width="270" src="https://raw.githubusercontent.com/recogito/recogito-js/master/recogitojs-logo-small.png" />
   <br/><br/>
 </p>
 
