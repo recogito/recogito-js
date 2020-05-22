@@ -87,11 +87,6 @@
           locale: 'auto' 
         });
 
-        r.setAuthInfo({
-          id: 'http://recogito.example.com/rainer',
-          displayName: 'rainer'
-        });
-
         r.loadAnnotations('annotations.w3c.json');
 
         r.on('createAnnotation', function(a) {
