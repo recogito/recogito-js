@@ -59,6 +59,7 @@ export class Recogito {
         wrapperEl={wrapperEl}
         readOnly={config.readOnly}
         formatter={config.formatter}
+        onAnnotationSelected={this.handleAnnotationSelected}
         onAnnotationCreated={this.handleAnnotationCreated} 
         onAnnotationUpdated={this.handleAnnotationUpdated} 
         onAnnotationDeleted={this.handleAnnotationDeleted}>
@@ -70,6 +71,9 @@ export class Recogito {
     
     appContainerEl);
   }
+
+  handleAnnotationSelected = annotation => 
+    this._emitter.emit('selectAnnotation', annotation.underlying);
 
   handleAnnotationCreated = (annotation, overrideId) =>
     this._emitter.emit('createAnnotation', annotation.underlying, overrideId);
