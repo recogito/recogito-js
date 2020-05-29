@@ -89,6 +89,10 @@
 
         r.loadAnnotations('annotations.w3c.json');
 
+        r.on('selectAnnotation', function(a) {
+          console.log('selected', a);
+        });
+
         r.on('createAnnotation', function(a) {
           console.log('created', a);
         });
