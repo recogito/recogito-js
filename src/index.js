@@ -65,7 +65,7 @@ export class Recogito {
         onAnnotationDeleted={this.handleAnnotationDeleted}>
 
         <CommentWidget />
-        <TagWidget />
+        <TagWidget vocabulary={config.tagVocabulary} />
 
       </TextAnnotator>,
     

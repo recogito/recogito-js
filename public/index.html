@@ -84,7 +84,8 @@
         // Intialize Recogito
         var r = Recogito.init({
           content: 'content', // Element id or DOM node to attach to
-          locale: 'auto' 
+          locale: 'auto',
+          tagVocabulary: [ 'Place', 'Person', 'Event', 'Organization', 'Animal' ]
         });
 
         r.loadAnnotations('annotations.w3c.json');
