@@ -62,7 +62,8 @@ export class Recogito {
         onAnnotationSelected={this.handleAnnotationSelected}
         onAnnotationCreated={this.handleAnnotationCreated} 
         onAnnotationUpdated={this.handleAnnotationUpdated} 
-        onAnnotationDeleted={this.handleAnnotationDeleted}>
+        onAnnotationDeleted={this.handleAnnotationDeleted}
+        relationVocabulary={config.relationVocabulary}>
 
         <CommentWidget />
         <TagWidget vocabulary={config.tagVocabulary} />
