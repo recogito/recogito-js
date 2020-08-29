@@ -2,17 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML, setLocale } from '@recogito/recogito-client-core';
+import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML, setLocale, addPolyfills } from '@recogito/recogito-client-core';
+
+import '@babel/polyfill';
+addPolyfills(); // Extra polyfills that babel doesn't include
 
 import '@recogito/recogito-client-core/themes/default';
 
 /**
- * The entrypoint into the application. Provides the 
+ * The entrypoint into the application. Provides the
  * externally visible JavaScript API.
  */
 export class Recogito {
 
-  constructor(config) {   
+  constructor(config) {
     // Programmatic calls to this instance from outside are forwarded
     // through a ref
     this._app = React.createRef();
@@ -20,21 +23,21 @@ export class Recogito {
     // Event handling via tiny-emitter
     this._emitter = new Emitter();
 
-    // The content element (which contains the text we want to annotate) 
-    // is wrapped in a DIV ('wrapperEl'). The application container DIV, 
-    // which holds the editor popup, will be attached as a child to the 
-    // wrapper element (=a sibling to the content element). This way, 
+    // The content element (which contains the text we want to annotate)
+    // is wrapped in a DIV ('wrapperEl'). The application container DIV,
+    // which holds the editor popup, will be attached as a child to the
+    // wrapper element (=a sibling to the content element). This way,
     // content and editor share the same CSS position reference frame.
     //
     // <wrapperEl>
     //   <contentEl />
     //   <appContainerEl />
     // </wrapperEl>
-    // 
-    let contentEl = (config.content.nodeType) ? 
+    //
+    let contentEl = (config.content.nodeType) ?
       config.content : document.getElementById(config.content);
 
-    // Unless this is preformatted text, remove multi spaces and 
+    // Unless this is preformatted text, remove multi spaces and
     // empty text nodes, so that HTML char offsets == browser offsets.
     if (config.mode !== 'pre')
       contentEl = deflateHTML(contentEl);
@@ -43,7 +46,7 @@ export class Recogito {
     wrapperEl.style.position = 'relative';
     contentEl.parentNode.insertBefore(wrapperEl, contentEl);
     wrapperEl.appendChild(contentEl);
-    
+
     const appContainerEl = document.createElement('DIV');
     wrapperEl.appendChild(appContainerEl);
 
@@ -53,15 +56,15 @@ export class Recogito {
 
     // A basic TextAnnotator with just a comment and a tag widget.
     ReactDOM.render(
-      <TextAnnotator 
+      <TextAnnotator
         ref={this._app}
         contentEl={contentEl}
         wrapperEl={wrapperEl}
         readOnly={config.readOnly}
         formatter={config.formatter}
         onAnnotationSelected={this.handleAnnotationSelected}
-        onAnnotationCreated={this.handleAnnotationCreated} 
-        onAnnotationUpdated={this.handleAnnotationUpdated} 
+        onAnnotationCreated={this.handleAnnotationCreated}
+        onAnnotationUpdated={this.handleAnnotationUpdated}
         onAnnotationDeleted={this.handleAnnotationDeleted}
         relationVocabulary={config.relationVocabulary}>
 
@@ -69,11 +72,11 @@ export class Recogito {
         <TagWidget vocabulary={config.tagVocabulary} />
 
       </TextAnnotator>,
-    
+
     appContainerEl);
   }
 
-  handleAnnotationSelected = annotation => 
+  handleAnnotationSelected = annotation =>
     this._emitter.emit('selectAnnotation', annotation.underlying);
 
   handleAnnotationCreated = (annotation, overrideId) =>
@@ -84,11 +87,11 @@ export class Recogito {
 
   handleAnnotationDeleted = annotation =>
     this._emitter.emit('deleteAnnotation', annotation.underlying);
-  
-  /******************/               
+
+  /******************/
   /*  External API  */
-  /******************/     
-  
+  /******************/
+
   /**
    * Adds a JSON-LD WebAnnotation to the annotation layer.
    */
@@ -101,7 +104,7 @@ export class Recogito {
   removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
 
-  /** 
+  /**
    * Loads JSON-LD WebAnnotations from the given URL.
    */
   loadAnnotations = url => axios.get(url).then(response => {
@@ -125,7 +128,7 @@ export class Recogito {
   }
 
   /**
-   * Activates annotation or relationship drawing mode. 
+   * Activates annotation or relationship drawing mode.
    * @param mode a string, either ANNOTATION (default) or RELATIONS
    */
   setMode = mode =>
@@ -140,19 +143,19 @@ export class Recogito {
     Environment.user = null;
 
   /** Sets the current 'server time', to avoid problems with locally-generated timestamps **/
-  setServerTime = timestamp => 
+  setServerTime = timestamp =>
     Environment.setServerTime(timestamp);
 
-  /** 
+  /**
    * Adds an event handler.
    */
   on = (event, handler) =>
     this._emitter.on(event, handler);
 
-  /** 
+  /**
    * Removes an event handler.
-   * 
-   * If no callback, removes all handlers for 
+   *
+   * If no callback, removes all handlers for
    * the given event.
    */
   off = (event, callback) =>
@@ -161,4 +164,3 @@ export class Recogito {
 }
 
 export const init = config => new Recogito(config);
-
