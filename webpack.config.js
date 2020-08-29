@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const APP_DIR = fs.realpathSync(process.cwd());
 
@@ -16,12 +15,11 @@ module.exports = {
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
+  devtool: 'source-map',
   performance: {
     hints: false
   },
-  optimization: {
-    minimizer: [ new UglifyJsPlugin() ],
-  },
+  optimization: { },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
