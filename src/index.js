@@ -2,7 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
-import { TextAnnotator, Editor, Environment, WebAnnotation, deflateHTML, setLocale, addPolyfills } from '@recogito/recogito-client-core';
+import {
+  Environment,
+  TextAnnotator,  
+  WebAnnotation, 
+  addPolyfills,
+  deflateHTML, 
+  setLocale 
+} from '@recogito/recogito-client-core';
 
 import '@babel/polyfill';
 addPolyfills(); // Extra polyfills that babel doesn't include
@@ -16,8 +23,7 @@ import '@recogito/recogito-client-core/themes/default';
 export class Recogito {
 
   constructor(config) {
-    // Programmatic calls to this instance from outside are forwarded
-    // through a ref
+    // API calls to this instance are forwarded through a ref
     this._app = React.createRef();
 
     // Event handling via tiny-emitter
@@ -52,28 +58,17 @@ export class Recogito {
 
     setLocale(config.locale);
 
-    const { CommentWidget, TagWidget } = Editor;
-
-    // A basic TextAnnotator with just a comment and a tag widget.
     ReactDOM.render(
       <TextAnnotator
         ref={this._app}
         contentEl={contentEl}
         wrapperEl={wrapperEl}
-        readOnly={config.readOnly}
-        formatter={config.formatter}
+        config={config}
         onAnnotationSelected={this.handleAnnotationSelected}
         onAnnotationCreated={this.handleAnnotationCreated}
         onAnnotationUpdated={this.handleAnnotationUpdated}
         onAnnotationDeleted={this.handleAnnotationDeleted}
-        relationVocabulary={config.relationVocabulary}>
-
-        <CommentWidget />
-        <TagWidget vocabulary={config.tagVocabulary} />
-
-      </TextAnnotator>,
-
-    appContainerEl);
+        relationVocabulary={config.relationVocabulary} />, appContainerEl);
   }
 
   handleAnnotationSelected = annotation =>
@@ -98,26 +93,9 @@ export class Recogito {
   addAnnotation = annotation =>
     this._app.current.addAnnotation(new WebAnnotation(annotation));
 
-  /**
-   * Removes the given JSON-LD WebAnnotation from the annotation layer.
-   */
-  removeAnnotation = annotation =>
-    this._app.current.removeAnnotation(new WebAnnotation(annotation));
-
-  /**
-   * Loads JSON-LD WebAnnotations from the given URL.
-   */
-  loadAnnotations = url => axios.get(url).then(response => {
-    const annotations = response.data.map(a => new WebAnnotation(a));
-    this._app.current.setAnnotations(annotations);
-    return annotations;
-  });
-
-  /** Initializes with the list of WebAnnotations **/
-  setAnnotations = annotations => {
-    const webannotations = annotations.map(a => new WebAnnotation(a));
-    this._app.current.setAnnotations(webannotations);
-  }
+  /** Clears the user auth information **/
+  clearAuthInfo = () =>
+    Environment.user = null;
 
   /**
    * Returns all annotations
@@ -128,29 +106,13 @@ export class Recogito {
   }
 
   /**
-   * Activates annotation or relationship drawing mode.
-   * @param mode a string, either ANNOTATION (default) or RELATIONS
+   * Loads JSON-LD WebAnnotations from the given URL.
    */
-  setMode = mode =>
-    this._app.current.setMode(mode);
-
-  /** Sets user auth information **/
-  setAuthInfo = authinfo =>
-    Environment.user = authinfo;
-
-  /** Clears the user auth information **/
-  clearAuthInfo = () =>
-    Environment.user = null;
-
-  /** Sets the current 'server time', to avoid problems with locally-generated timestamps **/
-  setServerTime = timestamp =>
-    Environment.setServerTime(timestamp);
-
-  /**
-   * Adds an event handler.
-   */
-  on = (event, handler) =>
-    this._emitter.on(event, handler);
+  loadAnnotations = url => axios.get(url).then(response => {
+    const annotations = response.data.map(a => new WebAnnotation(a));
+    this._app.current.setAnnotations(annotations);
+    return annotations;
+  });
 
   /**
    * Removes an event handler.
@@ -160,6 +122,39 @@ export class Recogito {
    */
   off = (event, callback) =>
     this._emitter.off(event, callback);
+
+  /**
+   * Adds an event handler.
+   */
+  on = (event, handler) =>
+    this._emitter.on(event, handler);
+
+  /**
+   * Removes the given JSON-LD WebAnnotation from the annotation layer.
+   */
+  removeAnnotation = annotation =>
+    this._app.current.removeAnnotation(new WebAnnotation(annotation));
+
+  /** Initializes with the list of WebAnnotations **/
+  setAnnotations = annotations => {
+    const webannotations = annotations.map(a => new WebAnnotation(a));
+    this._app.current.setAnnotations(webannotations);
+  }
+
+  /** Sets user auth information **/
+  setAuthInfo = authinfo =>
+    Environment.user = authinfo;
+
+  /**
+   * Activates annotation or relationship drawing mode.
+   * @param mode a string, either ANNOTATION (default) or RELATIONS
+   */
+  setMode = mode =>
+    this._app.current.setMode(mode);
+
+  /** Sets the current 'server time', to avoid problems with locally-generated timestamps **/
+  setServerTime = timestamp =>
+    Environment.setServerTime(timestamp);
 
 }
 
