@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
 import {
-  Environment,
   TextAnnotator,  
   WebAnnotation, 
   addPolyfills,
+  createEnvironment,
   deflateHTML, 
   setLocale 
 } from '@recogito/recogito-client-core';
@@ -28,6 +28,9 @@ export class Recogito {
 
     // Event handling via tiny-emitter
     this._emitter = new Emitter();
+
+    // Environment settings container
+    this._environment = createEnvironment();
 
     // The content element (which contains the text we want to annotate)
     // is wrapped in a DIV ('wrapperEl'). The application container DIV,
@@ -95,7 +98,7 @@ export class Recogito {
 
   /** Clears the user auth information **/
   clearAuthInfo = () =>
-    Environment.user = null;
+    this._environment.user = null;
 
   /**
    * Returns all annotations
@@ -143,7 +146,7 @@ export class Recogito {
 
   /** Sets user auth information **/
   setAuthInfo = authinfo =>
-    Environment.user = authinfo;
+    this._environment.user = authinfo;
 
   /**
    * Activates annotation or relationship drawing mode.
@@ -154,7 +157,7 @@ export class Recogito {
 
   /** Sets the current 'server time', to avoid problems with locally-generated timestamps **/
   setServerTime = timestamp =>
-    Environment.setServerTime(timestamp);
+    this._environment.setServerTime(timestamp);
 
 }
 
