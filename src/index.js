@@ -64,6 +64,7 @@ export class Recogito {
     ReactDOM.render(
       <TextAnnotator
         ref={this._app}
+        env={this._environment}
         contentEl={contentEl}
         wrapperEl={wrapperEl}
         config={config}
