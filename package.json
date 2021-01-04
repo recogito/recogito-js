@@ -51,7 +51,7 @@
     "websocket-extensions": ">=0.1.4"
   },
   "dependencies": {
-    "@recogito/recogito-client-core": "^0.2.4",
+    "@recogito/recogito-client-core": "^0.3.2",
     "@babel/polyfill": "^7.10.4",
     "axios": "^0.19.0",
     "preact": "^10.4.1",
