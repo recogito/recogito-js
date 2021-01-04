@@ -28,6 +28,7 @@ Otherwise download the [latest release](https://github.com/recogito/recogito-js/
 include it in your web page.
 
 ```html
+<link href="recogito.min.css" rel="stylesheet">
 <script src="recogito.min.js"></script>
 ```
 
