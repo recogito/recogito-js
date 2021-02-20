@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Emitter from 'tiny-emitter';
+import '@babel/polyfill';
 import {
-  TextAnnotator,  
   WebAnnotation, 
   addPolyfills,
   createEnvironment,
-  deflateHTML, 
   setLocale 
 } from '@recogito/recogito-client-core';
+import TextAnnotator from './TextAnnotator';
+import { deflateHTML } from './utils';
 
-import '@babel/polyfill';
 addPolyfills(); // Extra polyfills that babel doesn't include
 
 import '@recogito/recogito-client-core/themes/default';
