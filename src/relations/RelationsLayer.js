@@ -54,13 +54,15 @@ export default class RelationsLayer extends EventEmitter {
         console.log(`Error rendering relation for annotation ${annotation.id}`);
         return conns;
       }
-    }, [])
+    }, []);
+
+    setTimeout(() => this.recomputeAll(), 1);
   }
 
   recomputeAll = () => {
     this.connections.forEach(conn => {
       conn.recompute();
-    });
+    })
   }
 
   addOrUpdateRelation = (relation, maybePrevious) => {
