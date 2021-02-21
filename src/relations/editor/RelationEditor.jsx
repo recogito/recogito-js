@@ -1,6 +1,6 @@
 import React, { Component } from 'preact/compat';
 import { TrashIcon, CheckIcon } from '@recogito/recogito-client-core';
-import { Autocomplete } from '@recogito/recogito-client-core';
+import Autocomplete from '@recogito/recogito-client-core/src/editor/widgets/Autocomplete';
 
 /**
  * Shorthand to get the label (= first tag body value) from the

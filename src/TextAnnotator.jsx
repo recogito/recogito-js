@@ -5,6 +5,8 @@ import SelectionHandler from './selection/SelectionHandler';
 import RelationsLayer from './relations/RelationsLayer';
 import RelationEditor from './relations/editor/RelationEditor';
 
+import './TextAnnotator.scss';
+
 /**
  * Pulls the strings between the annotation highlight layer
  * and the editor popup.
