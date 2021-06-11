@@ -40,7 +40,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^4.5.2",
-    "mini-css-extract-plugin": "^0.11.2",
+    "mini-css-extract-plugin": "^1.6.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.2.0",
     "terser-webpack-plugin": "^4.2.3",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
-    "@recogito/recogito-client-core": "1.2.1",
+    "@recogito/recogito-client-core": "1.2.2",
     "axios": "^0.21.1",
     "preact": "^10.5.13",
     "tiny-emitter": "^2.1.0"
