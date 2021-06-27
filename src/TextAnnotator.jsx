@@ -17,7 +17,9 @@ export default class TextAnnotator extends Component {
     selectedAnnotation: null,
     selectedDOMElement: null,
     selectedRelation: null,
-    headless: false
+    
+    // Headless mode
+    editorDisabled: this.props.config.disableEditor,
   }
 
   /** Shorthand **/
@@ -59,6 +61,11 @@ export default class TextAnnotator extends Component {
 
   /** Selection on the text **/
   handleSelect = evt => {
+    this.state.editorDisabled ?
+      this.onHeadlessSelect(evt) : this.onNormalSelect(evt);
+  }
+    
+  onNormalSelect = evt => {
     const { selection, element } = evt;
     if (selection) {
       this.setState({
@@ -71,6 +78,33 @@ export default class TextAnnotator extends Component {
 
       if (!selection.isSelection)
         this.props.onAnnotationSelected(selection.clone());
+    } else {
+      this.clearState();
+    }
+  }
+  
+  onHeadlessSelect = evt => {
+    const { selection, element } = evt;
+    if (selection) {
+      this.setState({
+        selectedAnnotation: null,
+        selectedDOMElement: null
+      }, () => this.setState({
+        selectedAnnotation: selection,
+        selectedDOMElement: element
+      }));
+
+      if (!selection.isSelection) {
+        // Selection of existing annotation
+        this.props.onAnnotationSelected(selection.clone());
+      } else {
+        // Notify backend text selection to create a new annotation
+        const undraft = annotation => 
+        annotation.clone({
+          body : annotation.bodies.map(({ draft, ...rest }) => rest)
+        });
+        this.onCreateOrUpdateAnnotation('onAnnotationCreated')(undraft(selection).toAnnotation());
+      }
     } else {
       this.clearState();
     }
@@ -256,9 +290,12 @@ export default class TextAnnotator extends Component {
   }
 
   render() {
+	// The editor should open under normal conditions - annotation was selected, no headless mode
+    const open = this.state.selectedAnnotation && !this.state.editorDisabled;  
+  
     const readOnly = this.props.config.readOnly || this.state.selectedAnnotation?.readOnly
 
-    return (
+    return (open && (
       <>
         { this.state.selectedAnnotation &&
           <Editor
@@ -285,7 +322,7 @@ export default class TextAnnotator extends Component {
           />
         }
       </>
-    );
+    ));
   }
 
 }
