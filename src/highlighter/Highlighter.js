@@ -114,7 +114,17 @@ export default class Highlighter {
   _unwrapHighlightings(highlightSpans) {
     for (const span of highlightSpans) {
       const parent = span.parentNode;
-      parent.insertBefore(document.createTextNode(span.textContent), span);
+      const childNodes = span.childNodes;
+
+      if (childNodes?.length > 0) {
+        const len = childNodes.length;
+        for (let i = 0; i < len; i++) {
+          parent.insertBefore(childNodes[0], span);
+        }
+      } else {
+        parent.insertBefore(document.createTextNode(span.textContent), span);
+      }
+
       parent.removeChild(span);
     }
   }
