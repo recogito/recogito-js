@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import Emitter from 'tiny-emitter';
 import {
   WebAnnotation, 
@@ -108,11 +107,11 @@ export class Recogito {
   /**
    * Loads JSON-LD WebAnnotations from the given URL.
    */
-  loadAnnotations = url => axios.get(url).then(response => {
-    const annotations = response.data.map(a => new WebAnnotation(a));
-    this._app.current.setAnnotations(annotations);
-    return annotations;
-  });
+  loadAnnotations = url => fetch(url)
+    .then(response => response.json()).then(annotations => {
+      this.setAnnotations(annotations);
+      return annotations;
+    });
 
   /**
    * Removes an event handler.

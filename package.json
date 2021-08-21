@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "@recogito/recogito-client-core": "1.4.5",
-    "axios": "^0.21.1",
     "preact": "^10.5.13",
     "tiny-emitter": "^2.1.0"
   }
