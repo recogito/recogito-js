@@ -130,7 +130,7 @@ export default class Highlighter {
   }
 
   applyStyles = (annotation, spans) => {
-    const extraClasses = this.formatter ? this.formatter(annotation, spans) : '';
+    const extraClasses = this.formatter ? this.formatter(annotation) : '';
     spans.forEach(span => span.className = `r6o-annotation ${extraClasses}`.trim());
   }
 
