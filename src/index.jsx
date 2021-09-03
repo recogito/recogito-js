@@ -107,7 +107,7 @@ export class Recogito {
   /**
    * Loads JSON-LD WebAnnotations from the given URL.
    */
-  loadAnnotations = url => fetch(url)
+  loadAnnotations = (url, requestArgs) => fetch(url, requestArgs)
     .then(response => response.json()).then(annotations => {
       this.setAnnotations(annotations);
       return annotations;
