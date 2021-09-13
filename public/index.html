@@ -87,7 +87,13 @@
           locale: 'auto',
       	  widgets: [
             { widget: 'COMMENT' },
-            { widget: 'TAG', vocabulary: [ 'Place', 'Person', 'Event', 'Organization', 'Animal' ] }
+            { widget: 'TAG', vocabulary: [ 
+              { label: 'Place', uri: 'http://www.example.com/ontology/place' },
+              { label: 'Person', uri: 'http://www.example.com/ontology/person' },
+              { label: 'Event', uri: 'http://www.example.com/ontology/event' },
+              { label: 'Organization', uri: 'http://www.example.com/ontology/organization' },
+              { label: 'Animal', uri: 'http://www.example.com/ontology/animal' }
+            ] }
           ],
           relationVocabulary: [ 'isRelated', 'isPartOf', 'isSameAs ']
         });
