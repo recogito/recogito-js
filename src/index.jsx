@@ -41,19 +41,23 @@ export class Recogito {
     let contentEl = (config.content.nodeType) ?
       config.content : document.getElementById(config.content);
 
+    // Deep-clone the original node, so we can easily destroy the Recogito instance
+    this._originalContent = contentEl.cloneNode(true);
+
     // Unless this is preformatted text, remove multi spaces and
     // empty text nodes, so that HTML char offsets == browser offsets.
     if (config.mode !== 'pre')
       contentEl = deflateHTML(contentEl);
 
-    const wrapperEl = document.createElement('DIV');
-    wrapperEl.className = 'r6o-content-wrapper';
-    wrapperEl.style.position = 'relative';
-    contentEl.parentNode.insertBefore(wrapperEl, contentEl);
-    wrapperEl.appendChild(contentEl);
+    this._wrapperEl = document.createElement('DIV');
+    this._wrapperEl.className = 'r6o-content-wrapper';
+    this._wrapperEl.style.position = 'relative';
 
-    const appContainerEl = document.createElement('DIV');
-    wrapperEl.appendChild(appContainerEl);
+    contentEl.parentNode.insertBefore(this._wrapperEl, contentEl);
+    this._wrapperEl.appendChild(contentEl);
+
+    this._appContainerEl = document.createElement('DIV');
+    this._wrapperEl.appendChild(this._appContainerEl);
 
     setLocale(config.locale);
 
@@ -62,13 +66,13 @@ export class Recogito {
         ref={this._app}
         env={this._environment}
         contentEl={contentEl}
-        wrapperEl={wrapperEl}
+        wrapperEl={this._wrapperEl}
         config={config}
         onAnnotationSelected={this.handleAnnotationSelected}
         onAnnotationCreated={this.handleAnnotationCreated}
         onAnnotationUpdated={this.handleAnnotationUpdated}
         onAnnotationDeleted={this.handleAnnotationDeleted}
-        relationVocabulary={config.relationVocabulary} />, appContainerEl);
+        relationVocabulary={config.relationVocabulary} />, this._appContainerEl);
   }
 
   handleAnnotationSelected = annotation =>
@@ -87,61 +91,43 @@ export class Recogito {
   /*  External API  */
   /******************/
 
-  /**
-   * Adds a JSON-LD WebAnnotation to the annotation layer.
-   */
   addAnnotation = annotation =>
     this._app.current.addAnnotation(new WebAnnotation(annotation));
 
-  /** Clears the user auth information **/
   clearAuthInfo = () =>
     this._environment.user = null;
 
-  /**
-   * Returns all annotations
-   */
+  destroy = () => {
+    ReactDOM.unmountComponentAtNode(this._appContainerEl);
+    this._wrapperEl.parentNode.insertBefore(this._originalContent, this._wrapperEl);
+    this._wrapperEl.parentNode.removeChild(this._wrapperEl);
+  }
+
   getAnnotations = () => {
     const annotations = this._app.current.getAnnotations();
     return annotations.map(a => a.underlying);
   }
 
-  /**
-   * Loads JSON-LD WebAnnotations from the given URL.
-   */
   loadAnnotations = (url, requestArgs) => fetch(url, requestArgs)
     .then(response => response.json()).then(annotations => {
       this.setAnnotations(annotations);
       return annotations;
     });
 
-  /**
-   * Removes an event handler.
-   *
-   * If no callback, removes all handlers for
-   * the given event.
-   */
   off = (event, callback) =>
     this._emitter.off(event, callback);
 
-  /**
-   * Adds an event handler.
-   */
   on = (event, handler) =>
     this._emitter.on(event, handler);
 
-  /**
-   * Removes the given JSON-LD WebAnnotation from the annotation layer.
-   */
   removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
 
-  /** Initializes with the list of WebAnnotations **/
   setAnnotations = annotations => {
     const webannotations = annotations.map(a => new WebAnnotation(a));
     this._app.current.setAnnotations(webannotations);
   }
 
-  /** Sets user auth information **/
   setAuthInfo = authinfo =>
     this._environment.user = authinfo;
 
@@ -152,7 +138,6 @@ export class Recogito {
   setMode = mode =>
     this._app.current.setMode(mode);
 
-  /** Sets the current 'server time', to avoid problems with locally-generated timestamps **/
   setServerTime = timestamp =>
     this._environment.setServerTime(timestamp);
 
