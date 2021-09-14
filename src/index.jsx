@@ -47,6 +47,7 @@ export class Recogito {
       contentEl = deflateHTML(contentEl);
 
     const wrapperEl = document.createElement('DIV');
+    wrapperEl.className = 'r6o-content-wrapper';
     wrapperEl.style.position = 'relative';
     contentEl.parentNode.insertBefore(wrapperEl, contentEl);
     wrapperEl.appendChild(contentEl);
