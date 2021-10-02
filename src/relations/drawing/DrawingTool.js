@@ -73,7 +73,7 @@ export default class DrawingTool extends EventEmitter {
         this.currentConnection.dragTo(this.currentHover.node);
       } else {
         const { top, left } = this.contentEl.getBoundingClientRect();
-        this.currentConnection.dragTo([ evt.pageX - left, evt.pageY - top ]);
+        this.currentConnection.dragTo([ evt.clientX - left, evt.clientY - top]);
       }
     }
   }
