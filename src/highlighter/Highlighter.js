@@ -94,6 +94,12 @@ export default class Highlighter {
     }
   }
 
+  clear = () => {
+    const allAnnotationSpans = Array.from(document.querySelectorAll('.r6o-annotation'));
+    this._unwrapHighlightings(allAnnotationSpans);
+    this.el.normalize();
+  }
+
   /** 
    * Forces a new ID on the annotation with the given ID. This method handles 
    * the ID update within the Highlighter ONLY. It's up to the application to 

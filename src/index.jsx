@@ -94,6 +94,9 @@ export class Recogito {
   addAnnotation = annotation =>
     this._app.current.addAnnotation(new WebAnnotation(annotation));
 
+  clearAnnotations = () =>
+    this.setAnnotations(null);
+
   clearAuthInfo = () =>
     this._environment.user = null;
 
@@ -123,7 +126,8 @@ export class Recogito {
   removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
 
-  setAnnotations = annotations => {
+  setAnnotations = arg => {
+    const annotations = arg || [];
     const webannotations = annotations.map(a => new WebAnnotation(a));
     this._app.current.setAnnotations(webannotations);
   }

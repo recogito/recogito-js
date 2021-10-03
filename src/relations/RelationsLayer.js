@@ -40,6 +40,11 @@ export default class RelationsLayer extends EventEmitter {
     return c
   }
 
+  clear = () => {
+    this.connections.forEach(c => c.destroy());
+    this.connections = [];
+  }
+
   init = annotations => {
     // Filter annotations for 'relationship annotation' shape first
     this.connections = annotations.filter(annotation => {

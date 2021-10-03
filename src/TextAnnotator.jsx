@@ -226,6 +226,9 @@ export default class TextAnnotator extends Component {
   }
 
   setAnnotations = annotations => {
+    this.highlighter.clear();
+    this.relationsLayer.clear();
+    
     const clones = annotations.map(a => a.clone());
     this.highlighter.init(clones).then(() =>
       this.relationsLayer.init(clones));
