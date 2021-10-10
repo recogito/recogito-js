@@ -75,8 +75,8 @@ export class Recogito {
         relationVocabulary={config.relationVocabulary} />, this._appContainerEl);
   }
 
-  handleAnnotationSelected = annotation =>
-    this._emitter.emit('selectAnnotation', annotation.underlying);
+  handleAnnotationSelected = (annotation, element) =>
+    this._emitter.emit('selectAnnotation', annotation.underlying, element);
 
   handleAnnotationCreated = (annotation, overrideId) =>
     this._emitter.emit('createAnnotation', annotation.underlying, overrideId);

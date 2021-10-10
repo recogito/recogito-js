@@ -77,7 +77,7 @@ export default class TextAnnotator extends Component {
       }));
 
       if (!selection.isSelection)
-        this.props.onAnnotationSelected(selection.clone());
+        this.props.onAnnotationSelected(selection.clone(), element);
     } else {
       this.clearState();
     }
@@ -96,7 +96,7 @@ export default class TextAnnotator extends Component {
 
       if (!selection.isSelection) {
         // Selection of existing annotation
-        this.props.onAnnotationSelected(selection.clone());
+        this.props.onAnnotationSelected(selection.clone(), element);
       } else {
         // Notify backend text selection to create a new annotation
         const undraft = annotation => 
