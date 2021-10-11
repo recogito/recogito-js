@@ -1,4 +1,4 @@
-import React, { Component } from 'preact/compat';
+import React, { Component } from 'react';
 import { TrashIcon, CheckIcon } from '@recogito/recogito-client-core';
 import Autocomplete from '@recogito/recogito-client-core/src/editor/widgets/Autocomplete';
 

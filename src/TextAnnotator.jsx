@@ -1,4 +1,4 @@
-import React, { Component } from 'preact/compat';
+import React, { Component } from 'react';
 import { Editor } from '@recogito/recogito-client-core';
 import Highlighter from './highlighter/Highlighter';
 import SelectionHandler from './selection/SelectionHandler';
