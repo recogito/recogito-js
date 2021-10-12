@@ -39,8 +39,8 @@
           "exact": "death in battle"
         }, {
           "type": "TextPositionSelector",
-          "start": 646,
-          "end": 661
+          "start": 645,
+          "end": 660
         }]
       }
     }, {
@@ -57,8 +57,8 @@
           "exact": "Ithaca"
         }, {
           "type": "TextPositionSelector",
-          "start": 963,
-          "end": 970
+          "start": 962,
+          "end": 969
         }]
       }
     }, { 
