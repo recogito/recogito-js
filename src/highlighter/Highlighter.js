@@ -95,7 +95,7 @@ export default class Highlighter {
   }
 
   clear = () => {
-    const allAnnotationSpans = Array.from(document.querySelectorAll('.r6o-annotation'));
+    const allAnnotationSpans = Array.from(this.el.querySelectorAll('.r6o-annotation'));
     this._unwrapHighlightings(allAnnotationSpans);
     this.el.normalize();
   }
