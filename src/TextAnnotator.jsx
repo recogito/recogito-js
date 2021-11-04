@@ -17,7 +17,10 @@ export default class TextAnnotator extends Component {
     selectedAnnotation: null,
     selectedDOMElement: null,
     selectedRelation: null,
-    
+
+    // ReadOnly mode
+    readOnly: this.props.config.readOnly,
+
     // Headless mode
     editorDisabled: this.props.config.disableEditor,
   }
@@ -42,7 +45,6 @@ export default class TextAnnotator extends Component {
     this.selectionHandler.on('select', this.handleSelect);
 
     this.relationsLayer = new RelationsLayer(this.props.contentEl);
-    this.relationsLayer.readOnly = true; // Deactivate by default
 
     this.relationsLayer.on('createRelation', this.onEditRelation);
     this.relationsLayer.on('selectRelation', this.onEditRelation);
@@ -64,7 +66,7 @@ export default class TextAnnotator extends Component {
     this.state.editorDisabled ?
       this.onHeadlessSelect(evt) : this.onNormalSelect(evt);
   }
-    
+
   onNormalSelect = evt => {
     const { selection, element } = evt;
     if (selection) {
@@ -82,7 +84,7 @@ export default class TextAnnotator extends Component {
       this.clearState();
     }
   }
-  
+
   onHeadlessSelect = evt => {
     const { selection, element } = evt;
     if (selection) {
@@ -99,7 +101,7 @@ export default class TextAnnotator extends Component {
         this.props.onAnnotationSelected(selection.clone(), element);
       } else {
         // Notify backend text selection to create a new annotation
-        const undraft = annotation => 
+        const undraft = annotation =>
         annotation.clone({
           body : annotation.bodies.map(({ draft, ...rest }) => rest)
         });
@@ -262,7 +264,7 @@ export default class TextAnnotator extends Component {
   setAnnotations = annotations => {
     this.highlighter.clear();
     this.relationsLayer.clear();
-    
+
     const clones = annotations.map(a => a.clone());
     this.highlighter.init(clones).then(() =>
       this.relationsLayer.init(clones));
@@ -292,10 +294,20 @@ export default class TextAnnotator extends Component {
     }
   }
 
+  get readOnly() {
+    return this.state.readOnly;
+  }
+
+  set readOnly(readOnly) {
+    this.selectionHandler.readOnly = readOnly;
+    // Note: relationsHandler.readOnly should be set by setMode.
+    this.setState({ readOnly });
+  }
+
   render() {
 	// The editor should open under normal conditions - annotation was selected, no headless mode
-    const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;  
-  
+    const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;
+
     const readOnly = this.props.config.readOnly || this.state.selectedAnnotation?.readOnly
 
     return (open && (
