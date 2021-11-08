@@ -250,6 +250,12 @@ export default class TextAnnotator extends Component {
     this.highlighter.addOrUpdateAnnotation(annotation.clone());
   }
 
+  getAnnotations = () => {
+    const annotations = this.highlighter.getAllAnnotations();
+    const relations = this.relationsLayer.getAllRelations();
+    return annotations.concat(relations).map(a => a.clone());
+  }
+
   removeAnnotation = annotation => {
     this.highlighter.removeAnnotation(annotation);
 
@@ -259,6 +265,28 @@ export default class TextAnnotator extends Component {
       this.clearState();
   }
 
+  selectAnnotation = arg => {
+    // De-select in any case
+    this.setState({
+      selectedAnnotation: null,
+      selectedDOMElement: null
+    }, () => {
+      if (arg) {
+        const spans = this.highlighter.findAnnotationSpans(arg);
+        
+        if (spans.length > 0) {
+          const selectedDOMElement = spans[0];
+          const selectedAnnotation = spans[0].annotation;
+
+          this.setState({
+            selectedAnnotation,
+            selectedDOMElement
+          });
+        }
+      }
+    });
+  }
+
   setAnnotations = annotations => {
     this.highlighter.clear();
     this.relationsLayer.clear();
@@ -266,12 +294,6 @@ export default class TextAnnotator extends Component {
     const clones = annotations.map(a => a.clone());
     this.highlighter.init(clones).then(() =>
       this.relationsLayer.init(clones));
-  }
-
-  getAnnotations = () => {
-    const annotations = this.highlighter.getAllAnnotations();
-    const relations = this.relationsLayer.getAllRelations();
-    return annotations.concat(relations).map(a => a.clone());
   }
 
   setMode = mode => {

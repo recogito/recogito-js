@@ -58,10 +58,10 @@ export default class Highlighter {
     }
   }
 
-  _findAnnotationSpans = annotation => {
-    const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
-    return Array.prototype.slice.call(allAnnotationSpans)
-      .filter(span => span.annotation.isEqual(annotation));
+  findAnnotationSpans = annotationOrId => {
+    const id = annotationOrId.id || annotationOrId;
+    const spans =Array.from(document.querySelectorAll(`.r6o-annotation[data-id="${id}"]`));
+    return spans;
   }
 
   getAllAnnotations = () => {
@@ -72,8 +72,8 @@ export default class Highlighter {
 
   addOrUpdateAnnotation = (annotation, maybePrevious) => {
     // TODO index annotation to make this faster
-    const annoSpans = this._findAnnotationSpans(annotation);
-    const prevSpans = maybePrevious ? this._findAnnotationSpans(maybePrevious) : [];
+    const annoSpans = this.findAnnotationSpans(annotation);
+    const prevSpans = maybePrevious ? this.findAnnotationSpans(maybePrevious) : [];
     const spans = uniqueItems(annoSpans.concat(prevSpans));
 
     if (spans.length > 0) {
@@ -87,7 +87,7 @@ export default class Highlighter {
   }
 
   removeAnnotation = annotation => {
-    const spans = this._findAnnotationSpans(annotation);
+    const spans = this.findAnnotationSpans(annotation);
     if (spans) {
       this._unwrapHighlightings(spans)
       this.el.normalize();

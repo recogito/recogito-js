@@ -91,6 +91,10 @@ export class Recogito {
   /*  External API  */
   /******************/
 
+  // Common shorthand for handling annotationOrId args
+  _wrap = annotationOrId =>
+    annotationOrId?.type === 'Annotation' ? new WebAnnotation(annotationOrId) : annotationOrId;
+
   addAnnotation = annotation =>
     this._app.current.addAnnotation(new WebAnnotation(annotation));
 
@@ -125,6 +129,11 @@ export class Recogito {
 
   removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
+
+  selectAnnotation = annotationOrId => {
+    const selected = this._app.current.selectAnnotation(this._wrap(annotationOrId));
+    return selected?.underlying;
+  }
 
   setAnnotations = arg => {
     const annotations = arg || [];

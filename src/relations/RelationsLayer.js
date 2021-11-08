@@ -127,7 +127,7 @@ export default class RelationsLayer extends EventEmitter {
    */
   getConnectionsFor = annotation => {
     return this.connections.filter(c =>
-      c.startAnnotation.isEqual(annotation) || c.endAnnotation.isEqual(annotation));
+      c.startAnnotation.id === annotation.id || c.endAnnotation.id === annotation.id);
   }
 
   destroyConnectionsFor = annotation => {

@@ -33,6 +33,7 @@
       <button id="add-annotation">Add Annotation</button>
       <button id="update-annotation">Update Annotation</button>
       <button id="remove-annotation">Remove Annotation</button>
+      <button id="select-annotation">Select Annotation</button>
       <button id="toggle-mode">MODE: ANNOTATION</button>
     </div>
 
@@ -132,6 +133,10 @@
 
         document.getElementById('remove-annotation').addEventListener('click', function() {
           r.removeAnnotation(myAnnotation);
+        });
+
+        document.getElementById('select-annotation').addEventListener('click', function() {
+          r.selectAnnotation('#d7197c87-b45d-4217-9c4f-27573030448f');
         });
 
         // Switch annotation mode (annotation/relationships)
