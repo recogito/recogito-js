@@ -327,10 +327,10 @@ export default class TextAnnotator extends Component {
   }
 
   render() {
-	// The editor should open under normal conditions - annotation was selected, no headless mode
+  	// The editor should open under normal conditions - annotation was selected, no headless mode
     const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;
 
-    const readOnly = this.props.config.readOnly || this.state.selectedAnnotation?.readOnly
+    const readOnly = this.state.readOnly || this.state.selectedAnnotation?.readOnly
 
     return (open && (
       <>
