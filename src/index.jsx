@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Emitter from 'tiny-emitter';
 import {
-  WebAnnotation, 
+  WebAnnotation,
   createEnvironment,
-  setLocale 
+  setLocale
 } from '@recogito/recogito-client-core';
 import TextAnnotator from './TextAnnotator';
 import { deflateHTML } from './utils';
@@ -153,6 +153,14 @@ export class Recogito {
 
   setServerTime = timestamp =>
     this._environment.setServerTime(timestamp);
+
+  get readOnly() {
+    return this._app.current.readOnly;
+  }
+
+  set readOnly(readOnly) {
+    this._app.current.readOnly = readOnly;
+  }
 
 }
 
