@@ -252,6 +252,14 @@ export default class TextAnnotator extends Component {
     this.highlighter.addOrUpdateAnnotation(annotation.clone());
   }
 
+  get disableSelect() {
+    return !this.selectionHandler.enabled;
+  }
+
+  set disableSelect(disable) {
+    this.selectionHandler.enabled = !disable;
+  }
+
   getAnnotations = () => {
     const annotations = this.highlighter.getAllAnnotations();
     const relations = this.relationsLayer.getAllRelations();
