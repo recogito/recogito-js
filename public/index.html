@@ -94,7 +94,8 @@
           relationVocabulary: [ 'isRelated', 'isPartOf', 'isSameAs ']
         });
 
-        r.loadAnnotations('annotations.w3c.json');
+        r.loadAnnotations('annotations.w3c.json')
+          .then(() => console.log('loaded'));
 
         r.on('selectAnnotation', function(a) {
           console.log('selected', a);

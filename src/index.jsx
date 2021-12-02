@@ -125,8 +125,7 @@ export class Recogito {
 
   loadAnnotations = (url, requestArgs) => fetch(url, requestArgs)
     .then(response => response.json()).then(annotations => {
-      this.setAnnotations(annotations);
-      return annotations;
+      return this.setAnnotations(annotations).then(() => annotations);
     });
 
   off = (event, callback) =>
@@ -146,7 +145,7 @@ export class Recogito {
   setAnnotations = arg => {
     const annotations = arg || [];
     const webannotations = annotations.map(a => new WebAnnotation(a));
-    this._app.current.setAnnotations(webannotations);
+    return this._app.current.setAnnotations(webannotations);
   }
 
   setAuthInfo = authinfo =>
