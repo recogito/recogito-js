@@ -257,6 +257,11 @@ export default class TextAnnotator extends Component {
   }
 
   set disableSelect(disable) {
+    if (disable)
+      this.props.contentEl.classList.add('r6o-noselect');
+    else 
+      this.props.contentEl.classList.remove('r6o-noselect');
+  
     this.selectionHandler.enabled = !disable;
   }
 
