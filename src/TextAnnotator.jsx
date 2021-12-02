@@ -354,6 +354,7 @@ export default class TextAnnotator extends Component {
             annotation={this.state.selectedAnnotation}
             selectedElement={this.state.selectedDOMElement}
             readOnly={readOnly}
+            allowEmpty={this.props.config.allowEmpty}
             widgets={this.props.config.widgets}
             env={this.props.env}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
