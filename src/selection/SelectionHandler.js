@@ -85,10 +85,12 @@ export default class SelectionHandler extends EventEmitter {
           const exactOverlaps = getExactOverlaps(stub, spans);
           if (exactOverlaps.length > 0) {
             // User selected existing - reuse top-most original to avoid stratification
+            const top = exactOverlaps[0];
+
             this.clearSelection();
             this.emit('select', {
-              selection: exactOverlaps[0],
-              element: evt.target.closest('.r6o-annotation')
+              selection: top,
+              element: document.querySelector(`.r6o-annotation[data-id="${top.id}"]`)
             });
           } else {
             this.emit('select', {

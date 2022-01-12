@@ -54,7 +54,7 @@ export const rangeToSelection = (range, containerEl) => {
  * Util function that checks if the given selection is an exact overlap to any
  * existing annotations, and returns them, if so
  */
-export const getExactOverlaps = (newAnnotation, selectedSpans) => {
+export const getExactOverlaps = (selection, selectedSpans) => {
   // All existing annotations at this point
   const existingAnnotations = [];
 
@@ -68,9 +68,10 @@ export const getExactOverlaps = (newAnnotation, selectedSpans) => {
 
   if (existingAnnotations.length > 0)
     return existingAnnotations.filter(anno => {
-      const isSameAnchor = anno.anchor == newAnnotation.anchor;
-      const isSameQuote = anno.quote == newAnnotation.quote;
-      return isSameAnchor && isSameQuote;
+      const pos = selection.selector('TextPositionSelector');
+      const isSameStart = anno.start === pos.start;
+      const isSameEnd = anno.end === pos.end;
+      return isSameStart && isSameEnd;
     });
   else
     return [];
