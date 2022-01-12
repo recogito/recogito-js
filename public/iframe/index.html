@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RecogitoJS | Development</title>
+    <script src="../recogito.min.js"></script>
+    <style>
+      html, body {
+        box-sizing:border-box;
+        padding:10px;
+        margin:0;
+        width:100%;
+        height:100%;
+      }
+      #iframe {
+        width:100%;
+        height:100%;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="iframe" src="text.html"></iframe>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        var iframe = document.getElementById('iframe');
+        var el = iframe.contentWindow.document.getElementById('content');
+
+        // Intialize Recogito
+        var r = Recogito.init({
+          content: el
+        });
+
+        r.loadAnnotations('../annotations.w3c.json');
+
+        r.on('selectAnnotation', function(a) {
+          console.log('selected', a);
+        });
+
+        r.on('createAnnotation', function(a) {
+          console.log('created', a);
+        });
+
+        r.on('updateAnnotation', function(annotation, previous) {
+          console.log('updated', previous, 'with', annotation);
+        });
+      };
+    </script>
+  </body>
+</html>
