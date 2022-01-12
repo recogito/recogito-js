@@ -48,7 +48,9 @@ export default class SelectionHandler extends EventEmitter {
   }
 
   _onMouseDown = evt => {
-    this.clearSelection();
+    // left click only
+    if (evt.button === 0)
+      this.clearSelection();
   }
 
   _onMouseUp = evt => {
