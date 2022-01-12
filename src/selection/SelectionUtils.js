@@ -21,8 +21,21 @@ export const trimRange = range => {
   if (leadingSpaces > 0)
     range.setStart(range.startContainer, range.startOffset + leadingSpaces);
 
-  if (trailingSpaces > 0)
-    range.setEnd(range.endContainer, range.endOffset - trailingSpaces);
+  if (trailingSpaces > 0) {
+    const correctedEnd = range.endOffset - trailingSpaces;
+    if (correctedEnd < 0) {
+      // This correction crosses container tag boundaries
+      const prevContainer = range.endContainer.previousSibling || range.endContainer.parentNode;
+      
+      // Get last text child in previous container
+      const prevText = Array.from(prevContainer.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE).pop();
+
+      range.setEnd(prevText, prevText.textContent.length + correctedEnd);
+    } else {
+      range.setEnd(range.endContainer, correctedEnd);
+    }
+  }
 
   return range;
 };
