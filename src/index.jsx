@@ -169,6 +169,21 @@ export class Recogito {
     this._app.current.readOnly = readOnly;
   }
 
+  get widgets() {
+    return this._app.current.widgets;
+  }
+
+  set widgets(widgets) {
+    this._app.current.widgets = widgets;
+  }
+
+  get disableEditor() {
+    return this._app.current.disableEditor;
+  }
+
+  set disableEditor(disabled) {
+    this._app.current.disableEditor = disabled;
+  }
 }
 
 export const init = config => new Recogito(config);

@@ -21,6 +21,8 @@ export default class TextAnnotator extends Component {
     // ReadOnly mode
     readOnly: this.props.config.readOnly,
 
+    widgets: this.props.config.widgets,
+
     // Headless mode
     editorDisabled: this.props.config.disableEditor,
   }
@@ -259,9 +261,9 @@ export default class TextAnnotator extends Component {
   set disableSelect(disable) {
     if (disable)
       this.props.contentEl.classList.add('r6o-noselect');
-    else 
+    else
       this.props.contentEl.classList.remove('r6o-noselect');
-  
+
     this.selectionHandler.enabled = !disable;
   }
 
@@ -288,7 +290,7 @@ export default class TextAnnotator extends Component {
     }, () => {
       if (arg) {
         const spans = this.highlighter.findAnnotationSpans(arg);
-        
+
         if (spans.length > 0) {
           const selectedDOMElement = spans[0];
           const selectedAnnotation = spans[0].annotation;
@@ -307,7 +309,7 @@ export default class TextAnnotator extends Component {
     this.relationsLayer.clear();
 
     const clones = annotations.map(a => a.clone());
-    
+
     return this.highlighter.init(clones).then(() =>
       this.relationsLayer.init(clones));
   }
@@ -340,11 +342,34 @@ export default class TextAnnotator extends Component {
     this.setState({ readOnly });
   }
 
+  get widgets() {
+    return this.state.widgets;
+  }
+
+  set widgets(widgets) {
+    this.setState({ widgets });
+  }
+
+  get disableEditor() {
+    return this.state.editorDisabled;
+  }
+
+  set disableEditor(disabled) {
+    this.setState({editorDisabled: disabled}, () => {
+      // En- or disable Esc key listener
+      if (disabled)
+        document.addEventListener('keyup', this.handleEscape);
+      else
+        document.removeEventListener('keyup', this.handleEscape);
+    });
+  }
+
   render() {
   	// The editor should open under normal conditions - annotation was selected, no headless mode
     const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;
 
-    const readOnly = this.state.readOnly || this.state.selectedAnnotation?.readOnly
+    const readOnly = this.state.readOnly || this.state.selectedAnnotation?.readOnly;
+    const widgets = this.state.widgets || this.state.selectedAnnotation?.widgets;
 
     return (open && (
       <>
@@ -356,7 +381,7 @@ export default class TextAnnotator extends Component {
             selectedElement={this.state.selectedDOMElement}
             readOnly={readOnly}
             allowEmpty={this.props.config.allowEmpty}
-            widgets={this.props.config.widgets}
+            widgets={widgets}
             env={this.props.env}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
