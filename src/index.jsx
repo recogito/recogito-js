@@ -110,6 +110,14 @@ export class Recogito {
     this._wrapperEl.parentNode.removeChild(this._wrapperEl);
   }
 
+  get disableEditor() {
+    return this._app.current.disableEditor;
+  }
+
+  set disableEditor(disabled) {
+    this._app.current.disableEditor = disabled;
+  }
+
   get disableSelect() {
     return this._app.current.disableSelect;
   }
@@ -133,6 +141,14 @@ export class Recogito {
 
   on = (event, handler) =>
     this._emitter.on(event, handler);
+
+  get readOnly() {
+    return this._app.current.readOnly;
+  }
+
+  set readOnly(readOnly) {
+    this._app.current.readOnly = readOnly;
+  }
 
   removeAnnotation = annotation =>
     this._app.current.removeAnnotation(new WebAnnotation(annotation));
@@ -161,14 +177,6 @@ export class Recogito {
   setServerTime = timestamp =>
     this._environment.setServerTime(timestamp);
 
-  get readOnly() {
-    return this._app.current.readOnly;
-  }
-
-  set readOnly(readOnly) {
-    this._app.current.readOnly = readOnly;
-  }
-
   get widgets() {
     return this._app.current.widgets;
   }
@@ -177,13 +185,6 @@ export class Recogito {
     this._app.current.widgets = widgets;
   }
 
-  get disableEditor() {
-    return this._app.current.disableEditor;
-  }
-
-  set disableEditor(disabled) {
-    this._app.current.disableEditor = disabled;
-  }
 }
 
 export const init = config => new Recogito(config);

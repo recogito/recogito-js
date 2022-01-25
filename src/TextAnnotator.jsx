@@ -355,13 +355,7 @@ export default class TextAnnotator extends Component {
   }
 
   set disableEditor(disabled) {
-    this.setState({editorDisabled: disabled}, () => {
-      // En- or disable Esc key listener
-      if (disabled)
-        document.addEventListener('keyup', this.handleEscape);
-      else
-        document.removeEventListener('keyup', this.handleEscape);
-    });
+    this.setState({ editorDisabled: disabled });
   }
 
   render() {
@@ -369,7 +363,6 @@ export default class TextAnnotator extends Component {
     const open = (this.state.selectedAnnotation || this.state.selectedRelation) && !this.state.editorDisabled;
 
     const readOnly = this.state.readOnly || this.state.selectedAnnotation?.readOnly;
-    const widgets = this.state.widgets || this.state.selectedAnnotation?.widgets;
 
     return (open && (
       <>
@@ -381,7 +374,7 @@ export default class TextAnnotator extends Component {
             selectedElement={this.state.selectedDOMElement}
             readOnly={readOnly}
             allowEmpty={this.props.config.allowEmpty}
-            widgets={widgets}
+            widgets={this.state.widgets}
             env={this.props.env}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
