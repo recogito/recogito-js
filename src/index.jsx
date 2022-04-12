@@ -53,8 +53,14 @@ export class Recogito {
     this._wrapperEl.className = 'r6o-content-wrapper';
     this._wrapperEl.style.position = 'relative';
 
-    contentEl.parentNode.insertBefore(this._wrapperEl, contentEl);
-    this._wrapperEl.appendChild(contentEl);
+    if (contentEl instanceof HTMLBodyElement) {
+      this._wrapperEl.append(...contentEl.childNodes);
+      contentEl.appendChild(this._wrapperEl);
+    } else {
+      contentEl.parentNode.insertBefore(this._wrapperEl, contentEl);
+      this._wrapperEl.appendChild(contentEl);
+    }
+
 
     this._appContainerEl = document.createElement('DIV');
     this._wrapperEl.appendChild(this._appContainerEl);
