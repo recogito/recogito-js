@@ -50,11 +50,14 @@ export class Recogito {
       contentEl = deflateHTML(contentEl);
 
     this._wrapperEl = document.createElement('DIV');
-    this._wrapperEl.className = 'r6o-content-wrapper';
+    this._wrapperEl.className = 'r6o-content-wqrapper';
+    this._wrapperEl.style='min-height: 100%; height: 100%';
     this._wrapperEl.style.position = 'relative';
 
     if (contentEl instanceof HTMLBodyElement) {
       this._newContentEl = document.createElement('DIV')
+      this._newContentEl.style='min-height: 100%; height: 100%';
+      this._newContentEl.style.position = 'relative';
       this._newContentEl.append(...contentEl.childNodes);
       contentEl.append(this._newContentEl);
       contentEl = this._newContentEl;
