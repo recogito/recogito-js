@@ -54,12 +54,14 @@ export class Recogito {
     this._wrapperEl.style.position = 'relative';
 
     if (contentEl instanceof HTMLBodyElement) {
-      this._wrapperEl.append(...contentEl.childNodes);
-      contentEl.appendChild(this._wrapperEl);
-    } else {
-      contentEl.parentNode.insertBefore(this._wrapperEl, contentEl);
-      this._wrapperEl.appendChild(contentEl);
+      this._newContentEl = document.createElement('DIV')
+      this._newContentEl.append(...contentEl.childNodes);
+      contentEl.append(this._newContentEl);
+      contentEl = this._newContentEl;
     }
+    contentEl.parentNode.insertBefore(this._wrapperEl, contentEl);
+    this._wrapperEl.appendChild(contentEl);
+
 
 
     this._appContainerEl = document.createElement('DIV');
