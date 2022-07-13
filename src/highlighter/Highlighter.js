@@ -65,7 +65,7 @@ export default class Highlighter {
   }
 
   getAllAnnotations = () => {
-    const allAnnotationSpans = document.querySelectorAll('.r6o-annotation');
+    const allAnnotationSpans = this.el.querySelectorAll('.r6o-annotation');
     const allAnnotations = Array.from(allAnnotationSpans).map(span => span.annotation);
     return [...new Set(allAnnotations)];
   }
