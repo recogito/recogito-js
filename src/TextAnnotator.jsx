@@ -13,18 +13,24 @@ import './TextAnnotator.scss';
  */
 export default class TextAnnotator extends Component {
 
-  state = {
-    selectedAnnotation: null,
-    selectedDOMElement: null,
-    selectedRelation: null,
+  constructor(props) {
+    super(props);
 
-    // ReadOnly mode
-    readOnly: this.props.config.readOnly,
+    this.state = {
+      selectedAnnotation: null,
+      selectedDOMElement: null,
+      selectedRelation: null,
 
-    widgets: this.props.config.widgets,
+      // ReadOnly mode
+      readOnly: this.props.config.readOnly,
 
-    // Headless mode
-    editorDisabled: this.props.config.disableEditor,
+      widgets: this.props.config.widgets,
+
+      // Headless mode
+      editorDisabled: this.props.config.disableEditor,
+    }
+
+    this._editor = React.createRef();
   }
 
   /** Shorthand **/
@@ -368,6 +374,7 @@ export default class TextAnnotator extends Component {
       <>
         { this.state.selectedAnnotation &&
           <Editor
+            ref={this._editor}
             autoPosition={this.props.config.editorAutoPosition}
             wrapperEl={this.props.wrapperEl}
             annotation={this.state.selectedAnnotation}
