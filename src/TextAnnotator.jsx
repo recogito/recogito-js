@@ -71,6 +71,11 @@ export default class TextAnnotator extends Component {
 
   /** Selection on the text **/
   handleSelect = evt => {
+    // We no longer allow selects if the editor is open and
+    // the user has already made changes
+    if (this._editor.current?.hasChanges())
+      return;
+    
     this.state.editorDisabled ?
       this.onHeadlessSelect(evt) : this.onNormalSelect(evt);
   }
