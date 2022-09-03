@@ -39,6 +39,8 @@ export default class TextAnnotator extends Component {
       selectedAnnotation: null,
       selectedDOMElement: null
     });
+
+    this.selectionHandler.enabled = true;
   }
 
   handleEscape = (evt) => {
@@ -65,17 +67,18 @@ export default class TextAnnotator extends Component {
     document.removeEventListener('keydown', this.handleEscape);
   }
 
+  onChanged = () => {
+    // Disable selection outside of the editor 
+    // when user makes the first change
+    this.selectionHandler.enabled = false;
+  }
+
   /**************************/
   /* Annotation CRUD events */
   /**************************/
 
   /** Selection on the text **/
   handleSelect = evt => {
-    // We no longer allow selects if the editor is open and
-    // the user has already made changes
-    if (this._editor.current?.hasChanges())
-      return;
-    
     this.state.editorDisabled ?
       this.onHeadlessSelect(evt) : this.onNormalSelect(evt);
   }
@@ -388,6 +391,7 @@ export default class TextAnnotator extends Component {
             allowEmpty={this.props.config.allowEmpty}
             widgets={this.state.widgets}
             env={this.props.env}
+            onChanged={this.onChanged}
             onAnnotationCreated={this.onCreateOrUpdateAnnotation('onAnnotationCreated')}
             onAnnotationUpdated={this.onCreateOrUpdateAnnotation('onAnnotationUpdated')}
             onAnnotationDeleted={this.onDeleteAnnotation}

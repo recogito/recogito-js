@@ -110,30 +110,32 @@ export default class SelectionHandler extends EventEmitter {
   }
 
   clearSelection = () => {
-    this._currentSelection = null;
+    if (this.isEnabled) {
+      this._currentSelection = null;
 
-    // Remove native selection, if any
-    if (this.document.getSelection) {
-      if (this.document.getSelection().empty) {  // Chrome
-        this.document.getSelection().empty();
-      } else if (this.document.getSelection().removeAllRanges) {  // Firefox
-        this.document.getSelection().removeAllRanges();
+      // Remove native selection, if any
+      if (this.document.getSelection) {
+        if (this.document.getSelection().empty) {  // Chrome
+          this.document.getSelection().empty();
+        } else if (this.document.getSelection().removeAllRanges) {  // Firefox
+          this.document.getSelection().removeAllRanges();
+        }
+      } else if (this.document.selection) {  // IE?
+        this.document.selection.empty();
       }
-    } else if (this.document.selection) {  // IE?
-      this.document.selection.empty();
-    }
 
-    this.el.classList.remove('r6o-hide-selection');
+      this.el.classList.remove('r6o-hide-selection');
 
-    const spans = Array.prototype.slice.call(this.el.querySelectorAll('.r6o-selection'));
-    if (spans) {
-      spans.forEach(span => {
-        const parent = span.parentNode;
-        parent.insertBefore(this.document.createTextNode(span.textContent), span);
-        parent.removeChild(span);
-      });
+      const spans = Array.prototype.slice.call(this.el.querySelectorAll('.r6o-selection'));
+      if (spans) {
+        spans.forEach(span => {
+          const parent = span.parentNode;
+          parent.insertBefore(this.document.createTextNode(span.textContent), span);
+          parent.removeChild(span);
+        });
+      }
+      this.el.normalize();
     }
-    this.el.normalize();
   }
 
 }
