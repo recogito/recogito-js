@@ -212,9 +212,10 @@ export default class TextAnnotator extends Component {
   }
 
   /** Cancel button on annotation editor **/
-  onCancelAnnotation = () => {
+  onCancelAnnotation = annotation => {
     this.clearState();
     this.selectionHandler.clearSelection();
+    this.props.onCancelSelected(annotation);
   }
 
   /************************/

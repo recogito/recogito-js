@@ -109,6 +109,10 @@
           console.log('updated', previous, 'with', annotation);
         });
 
+        r.on('cancelSelected', function(annotation) {
+          console.log('cancel', annotation);
+        });
+
         // Wire the Add/Update/Remove buttons
         document.getElementById('add-annotation').addEventListener('click', function() {
           r.addAnnotation(myAnnotation);

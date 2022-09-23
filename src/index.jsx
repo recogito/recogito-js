@@ -78,6 +78,7 @@ export class Recogito {
         onAnnotationCreated={this.handleAnnotationCreated}
         onAnnotationUpdated={this.handleAnnotationUpdated}
         onAnnotationDeleted={this.handleAnnotationDeleted}
+        onCancelSelected={this.handleCancelSelected}
         relationVocabulary={config.relationVocabulary} />, this._appContainerEl);
   }
 
@@ -92,6 +93,9 @@ export class Recogito {
 
   handleAnnotationDeleted = annotation =>
     this._emitter.emit('deleteAnnotation', annotation.underlying);
+
+  handleCancelSelected = annotation =>
+    this._emitter.emit('cancelSelected', annotation.underlying);
 
   /******************/
   /*  External API  */
