@@ -153,10 +153,10 @@ export default class Highlighter {
     let n = ni.nextNode();
     while (n != null) {
       runningOffset += n.textContent.length;
+      nodes.push(n);
       if (runningOffset > stopOffset) {
         break;
       }
-      nodes.push(n);
       n = ni.nextNode();
     }
     return nodes
