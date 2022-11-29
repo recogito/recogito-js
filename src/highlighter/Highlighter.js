@@ -1,5 +1,3 @@
-const TEXT = 3; // HTML DOM node type for text nodes
-
 const RENDER_BATCH_SIZE = 100; // Number of annotations to render in one frame
 
 const uniqueItems = items => Array.from(new Set(items))
@@ -147,33 +145,21 @@ export default class Highlighter {
     });
   }
 
-  walkTextNodes = (node, stopOffset, nodeArray) => {
-    const nodes = (nodeArray) ? nodeArray : [];
+  walkTextNodes = (node, stopOffset) => {
+    const nodes = [];
 
-    const offset = (function() {
-          var runningOffset = 0;
-          nodes.forEach(function(node) {
-            runningOffset += node.textContent.length;;
-          });
-          return runningOffset;
-        })();
-
-    let keepWalking = true;
-
-    if (offset > stopOffset)
-      return false;
-
-    if (node.nodeType === TEXT)
-      nodes.push(node);
-
-    node = node.firstChild;
-
-    while(node && keepWalking) {
-      keepWalking = this.walkTextNodes(node, stopOffset, nodes);
-      node = node.nextSibling;
+    const ni = document.createNodeIterator(node, NodeFilter.SHOW_TEXT)
+    var runningOffset = 0;
+    let n = ni.nextNode();
+    while (n != null) {
+      runningOffset += n.textContent.length;
+      nodes.push(n);
+      if (runningOffset > stopOffset) {
+        break;
+      }
+      n = ni.nextNode();
     }
-
-    return nodes;
+    return nodes
   }
 
   charOffsetsToDOMPosition = charOffsets => {
@@ -195,33 +181,23 @@ export default class Highlighter {
 
   /**
    * Given a rootNode, this helper gets all text between a given
-   * start- and end-node. Basically combines walkTextNodes (above)
-   * with a hand-coded dropWhile & takeWhile.
+   * start- and end-node.
    */
   textNodesBetween = (startNode, endNode, rootNode) => {
-    // To improve performance, don't walk the DOM longer than necessary
-    var stopOffset = (function() {
-          var rangeToEnd = document.createRange();
-          rangeToEnd.setStart(rootNode, 0);
-          rangeToEnd.setEnd(endNode, endNode.textContent.length);
-          return rangeToEnd.toString().length;
-        })(),
+    const ni = document.createNodeIterator(rootNode, NodeFilter.SHOW_TEXT)
 
-        allTextNodes = this.walkTextNodes(rootNode, stopOffset),
+    let n = ni.nextNode()
+    let take = false
+    const nodesBetween = []
 
-        nodesBetween = [],
-        len = allTextNodes.length,
-        take = false,
-        n, i;
-
-    for (i=0; i<len; i++) {
-      n = allTextNodes[i];
-
+    while (n != null) {
       if (n === endNode) take = false;
 
       if (take) nodesBetween.push(n);
 
       if (n === startNode) take = true;
+
+      n = ni.nextNode()
     }
 
     return nodesBetween;
