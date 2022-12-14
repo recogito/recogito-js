@@ -1,6 +1,6 @@
 {
   "name": "@recogito/recogito-js",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "A JavaScript library for text annotation",
   "main": "dist/recogito.min.js",
   "scripts": {
