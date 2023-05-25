@@ -180,9 +180,9 @@ export default class TextAnnotator extends Component {
   overrideRelationId = originalId => forcedId => {
     if (this.state.selectedRelation) {
       this.setState({ selectedRelation: null }, () =>
-       this.relationsLayer.overrideId(originalId, forcedId));
+       this.relationsLayer.overrideRelationId(originalId, forcedId));
     } else {
-      this.relationsLayer.overrideId(originalId, forcedId);
+      this.relationsLayer.overrideRelationId(originalId, forcedId);
     }
   }
 
