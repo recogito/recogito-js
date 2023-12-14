@@ -133,8 +133,40 @@ export default class Highlighter {
     }
   }
 
+  /**
+   * Apply styles using this highlighter's formatter, which is a user-defined
+   * function that takes an annotation as input, and returns either a string,
+   * or an object. If a string is returned, this will be appended to the
+   * annotation element CSS class list. Otherwise, the object can have the
+   * following properties:
+   * 
+   * - 'className' added to the CSS class list
+   * - 'data-*' added as data attributes
+   * - 'style' a list of CSS styles (in the form of a string) 
+   */
   applyStyles = (annotation, spans) => {
-    const extraClasses = this.formatter ? this.formatter(annotation) : '';
+    let extraClasses = '';
+    if (this.formatter && this.formatter(annotation)) {
+      const format = this.formatter(annotation);
+      if (typeof format === 'string' || format instanceof String) {
+        // string: append to class list
+        extraClasses = format;
+      } else {
+        // object: extract className and style
+        const { className, style } = format;
+        if (className) extraClasses = className;
+        if (style) spans.forEach(span => {
+          span.setAttribute('style', `${span.style} ${style}`.trim());
+        });
+      }
+      // Copy data attributes
+      for (const key in format) {
+        if (format.hasOwnProperty(key) && key.startsWith('data-')) {
+          spans.forEach(span => span.setAttribute(key, format[key]));
+        }
+      }  
+    }
+    // apply extra classes if there are any; ensure .r6o-annotation added regardless
     spans.forEach(span => span.className = `r6o-annotation ${extraClasses}`.trim());
   }
 
