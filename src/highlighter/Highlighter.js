@@ -156,7 +156,7 @@ export default class Highlighter {
         const { className, style } = format;
         if (className) extraClasses = className;
         if (style) spans.forEach(span => {
-          span.setAttribute('style', `${span.style} ${style}`.trim());
+          span.setAttribute('style', `${span.style.cssText} ${style}`.trim());
         });
       }
       // Copy data attributes
