@@ -35,6 +35,7 @@
       <button id="remove-annotation">Remove Annotation</button>
       <button id="select-annotation">Select Annotation</button>
       <button id="toggle-mode">MODE: ANNOTATION</button>
+      <strong>  Read Only : </strong> <input type = "checkbox" id = "read-only">
     </div>
 
     <div id="outer-container">
@@ -160,6 +161,10 @@
 
           r.setMode(annotationMode);
         });
+
+
+        document.getElementById("read-only").addEventListener('change',  (event)=> r.readOnly=event.currentTarget.checked);
+
       })();
     </script>
   </body>
